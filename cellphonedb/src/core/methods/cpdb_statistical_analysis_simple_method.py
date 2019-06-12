@@ -55,8 +55,6 @@ def call(meta: pd.DataFrame,
                                                                                    threads,
                                                                                    suffixes=('_1', '_2'))
 
-    print(statistical_mean_analysis)
-
     result_percent = cpdb_statistical_analysis_helper.build_percent_result(real_mean_analysis,
                                                                            real_percent_analysis,
                                                                            statistical_mean_analysis,
