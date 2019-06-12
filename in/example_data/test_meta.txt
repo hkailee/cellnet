@@ -1,0 +1,9 @@
+Cell	cell_typed	group
+d-pos_AAACCTGAGCAGGTCA	NKcells_1	tumor
+d-pos_AAACCTGGTACCGAGA	NKcells_0	normal
+d-pos_AAACCTGTCGCCATAA	NKcells_1	tumor
+d-pos_AAAGATGCATTGAGCT	NKcells_0	normal
+d-pos_AAAGATGTCCAAAGTC	NKcells_0	tumor
+d-pos_AAAGCAACACATTCGA	NKcells_1	normal
+d-pos_AAAGTAGAGAGCCCAA	NKcells_0	tumor
+d-pos_AAAGTAGCAAGCTGAG	NKcells_0	tumor
