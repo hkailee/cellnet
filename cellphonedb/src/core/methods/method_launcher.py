@@ -101,6 +101,7 @@ class MethodLauncher():
             raise ParseCountsException('Counts values are not decimal values', 'Incorrect file format')
         try:
             counts = counts.astype(pd.np.float)  # type: pd.DataFrame
+            counts = counts.replace(0, 0.01)
         except:
             raise ParseCountsException
         for cell in meta.index.values:

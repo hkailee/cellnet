@@ -76,8 +76,9 @@ def build_clusters(meta: pd.DataFrame, counts: pd.DataFrame) -> dict:
             cluster_counts[cluster_name, group_name] = cluster_count
             # cluster_means[cluster_name, group_name] = cluster_count.apply(lambda count: count.mean(), axis=1)
             cluster_means[cluster_name, group_name] = cluster_count.apply(lambda count: count.mean(), axis=1)
+        # cluster_de_means[cluster_name] = cluster_means[cluster_name, 'tumor'] / cluster_means[cluster_name, 'normal']
         cluster_de_means[cluster_name] = np.log2((cluster_means[cluster_name, 'tumor'] / cluster_means[cluster_name, 'normal']))
-    
+   
     clusters['counts'] = cluster_counts
     clusters['means'] = cluster_de_means
 

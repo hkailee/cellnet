@@ -57,22 +57,22 @@ def call(meta: pd.DataFrame,
 
     print(statistical_mean_analysis)
 
-    # result_percent = cpdb_statistical_analysis_helper.build_percent_result(real_mean_analysis,
-    #                                                                        real_percent_analysis,
-    #                                                                        statistical_mean_analysis,
-    #                                                                        interactions_filtered,
-    #                                                                        cluster_interactions, base_result)
+    result_percent = cpdb_statistical_analysis_helper.build_percent_result(real_mean_analysis,
+                                                                           real_percent_analysis,
+                                                                           statistical_mean_analysis,
+                                                                           interactions_filtered,
+                                                                           cluster_interactions, base_result)
 
 
 
-    # pvalues_result, means_result, significant_means, mean_pvalue_result, deconvoluted_result = build_results(
-    #     interactions_filtered,
-    #     real_mean_analysis,
-    #     result_percent,
-    #     clusters['means'],
-    #     result_precision)
+    pvalues_result, means_result, significant_means, mean_pvalue_result, deconvoluted_result = build_results(
+        interactions_filtered,
+        real_mean_analysis,
+        result_percent,
+        clusters['means'],
+        result_precision)
 
-    # return pvalues_result, means_result, significant_means, mean_pvalue_result, deconvoluted_result
+    return pvalues_result, means_result, significant_means, mean_pvalue_result, deconvoluted_result
 
 
 def build_results(interactions: pd.DataFrame,
