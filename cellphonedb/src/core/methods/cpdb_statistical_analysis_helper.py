@@ -400,9 +400,11 @@ def build_percent_result(real_mean_analysis: pd.DataFrame, real_perecents_analys
                 if real_mean > 0:
                     shuffled_bigger_smaller = len(mean_per_pair[mean_per_pair > real_mean])                     
                     result_percent = shuffled_bigger_smaller / len(mean_per_pair)
+                    result_percent = result_percent / 2 # two-tails
                 elif real_mean < 0:
                     shuffled_bigger_smaller = len(mean_per_pair[mean_per_pair < real_mean]) 
                     result_percent = shuffled_bigger_smaller / len(mean_per_pair)
+                    result_percent = result_percent / 2 # two-tails
 
             percent_result.at[interaction_index, cluster_interaction_string] = result_percent
 
