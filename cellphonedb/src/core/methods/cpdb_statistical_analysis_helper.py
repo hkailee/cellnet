@@ -368,22 +368,45 @@ def build_percent_result(real_mean_analysis: pd.DataFrame, real_perecents_analys
             cluster_interaction_string = '{}_{}'.format(cluster_interaction[0], cluster_interaction[1])
             real_mean = real_mean_analysis.at[interaction_index, cluster_interaction_string]
             real_percent = real_perecents_analysis.at[interaction_index, cluster_interaction_string]
-
+            # print(real_mean)
+            # print(real_percent)
             if int(real_percent) == 0 or real_mean == 0:
                 result_percent = 1.0
-
+        
             else:
-                shuffled_bigger = 0
+                # shuffled_bigger = 0
 
+                # for statistical_mean in statistical_mean_analysis:
+                #     mean = statistical_mean.at[interaction_index, cluster_interaction_string]
+                #     # print(mean)
+                #     if mean > real_mean:
+                #         shuffled_bigger += 1
+                # result_percent = shuffled_bigger / len(statistical_mean_analysis)
+
+                # cellnet
+                mean_per_pair = []
+                
                 for statistical_mean in statistical_mean_analysis:
                     mean = statistical_mean.at[interaction_index, cluster_interaction_string]
-                    if mean > real_mean:
-                        shuffled_bigger += 1
+                    mean_per_pair.append(mean)
 
-                result_percent = shuffled_bigger / len(statistical_mean_analysis)
+                mean_per_pair = [x for x in mean_per_pair if ~np.isnan(x)]
+                mean_per_pair = np.array(mean_per_pair)
+                # mean_per_pair.sort()
+
+                # mean_at_975 = np.percentile(mean_per_pair, 97.5)
+                # mean_at_25 = np.percentile(mean_per_pair, 2.5)
+                # print(mean_at_975, mean_at_25)
+                if real_mean > 0:
+                    shuffled_bigger_smaller = len(mean_per_pair[mean_per_pair > real_mean])                     
+                    result_percent = shuffled_bigger_smaller / len(mean_per_pair)
+                elif real_mean < 0:
+                    shuffled_bigger_smaller = len(mean_per_pair[mean_per_pair < real_mean]) 
+                    result_percent = shuffled_bigger_smaller / len(mean_per_pair)
 
             percent_result.at[interaction_index, cluster_interaction_string] = result_percent
 
+        
     return percent_result
 
 
@@ -468,6 +491,28 @@ def counts_percent(counts: pd.Series, threshold: float) -> int:
 
 
 def cluster_interaction_mean(cluster_interaction: tuple, interaction: pd.Series, clusters_means: dict,
+                             suffixes: tuple = ('_1', '_2')) -> float:
+    """
+    Calculates the mean value for two clusters.
+
+    Set 0 if one of both is 0
+    """
+
+    means_cluster_receptors = clusters_means[cluster_interaction[0]]
+    means_cluster_ligands = clusters_means[cluster_interaction[1]]
+
+    mean_receptor = means_cluster_receptors[interaction['ensembl{}'.format(suffixes[0])]]
+    mean_ligand = means_cluster_ligands[interaction['ensembl{}'.format(suffixes[1])]]
+
+    # if mean_receptor == 0 or mean_ligand == 0:
+    #     interaction_mean = 0
+    # else:
+    interaction_mean = (mean_receptor + mean_ligand) / 2
+
+    return interaction_mean
+
+
+def cluster_interaction_mean_ori(cluster_interaction: tuple, interaction: pd.Series, clusters_means: dict,
                              suffixes: tuple = ('_1', '_2')) -> float:
     """
     Calculates the mean value for two clusters.

@@ -101,7 +101,7 @@ class MethodLauncher():
             raise ParseCountsException('Counts values are not decimal values', 'Incorrect file format')
         try:
             counts = counts.astype(pd.np.float)  # type: pd.DataFrame
-            counts = counts.replace(0, 0.01)
+            counts = counts[:].apply(lambda x: x+0.01, axis=1)
         except:
             raise ParseCountsException
         for cell in meta.index.values:
@@ -114,6 +114,7 @@ class MethodLauncher():
                 raise ParseCountsException('Some celltypes/clusters do not have tumor group')
             elif 'normal' not in available_group:
                 raise ParseCountsException('Some celltypes/clusters do not have normal group')
+
         return counts
 
     def _counts_validations_ori(self, counts: pd.DataFrame, meta: pd.DataFrame) -> pd.DataFrame:
