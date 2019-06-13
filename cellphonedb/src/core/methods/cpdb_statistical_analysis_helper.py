@@ -74,7 +74,6 @@ def build_clusters(meta: pd.DataFrame, counts: pd.DataFrame) -> dict:
             cells = meta[(meta['cell_type'] == cluster_name) & (meta['group'] == group_name)].index
             cluster_count = counts.loc[:, cells]
             cluster_counts[cluster_name, group_name] = cluster_count
-            # cluster_means[cluster_name, group_name] = cluster_count.apply(lambda count: count.mean(), axis=1)
             cluster_means[cluster_name, group_name] = cluster_count.apply(lambda count: count.mean(), axis=1)
         # cluster_de_means[cluster_name] = cluster_means[cluster_name, 'tumor'] / cluster_means[cluster_name, 'normal']
         cluster_de_means[cluster_name] = np.log2((cluster_means[cluster_name, 'tumor'] / cluster_means[cluster_name, 'normal']))
@@ -393,9 +392,10 @@ def build_percent_result(real_mean_analysis: pd.DataFrame, real_perecents_analys
                     result_percent = shuffled_bigger_smaller / len(mean_per_pair)
                     result_percent = result_percent / 2 # two-tails
                 elif real_mean < 0:
-                    shuffled_bigger_smaller = len(mean_per_pair[mean_per_pair < real_mean]) 
-                    result_percent = shuffled_bigger_smaller / len(mean_per_pair)
-                    result_percent = result_percent / 2 # two-tails
+                    result_percent = 1.0
+                    # shuffled_bigger_smaller = len(mean_per_pair[mean_per_pair < real_mean]) 
+                    # result_percent = shuffled_bigger_smaller / len(mean_per_pair)
+                    # result_percent = result_percent / 2 # two-tails
 
             percent_result.at[interaction_index, cluster_interaction_string] = result_percent
 
